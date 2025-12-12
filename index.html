@@ -294,7 +294,7 @@
 
     <div id="highScoreAskScreen" class="screen">
         <h1 style="color: var(--deep-rose); font-size: 3.5em;">The Ultimate Question...</h1>
-        <p style="font-size: 1.6em; margin-bottom: 40px;">Wanna know my heart **more**? 💖</p>
+        <p style="font-size: 1.6em; margin-bottom: 40px;">Wanna know my heart more? 💖🫶</p>
         <button onclick="showScreen('highScoreSadScreen')">Yes</button>
         <button onclick="showScreen('highScoreKnowScreen')">No</button>
     </div>
@@ -317,7 +317,7 @@
     <div id="highScoreKnowScreen" class="screen">
         <h1>A True Soulmate! ✨</h1>
         <p style="font-size: 1.6em; margin-bottom: 20px;">I KNOW THAT YOU KNOW MY HEART MORE THAN I DO. BUT STILL, YOU HAVE TO LISTEN TO IT...</p>
-        <p style="margin-top: 30px; color: #666;"
+        <p style="margin-top: 30px; color: #666;">
         <button onclick="showScreen('poeticNoteScreen')" style="font-size: 2.5em; padding: 5px 20px;">&rarr;</button>
     </div>
 
@@ -352,7 +352,7 @@
             { q: "Which thing of yours affect me the MOST", a: ["your smile", "Your tone while talking", "your texts"], correct: "Your tone while talking" },
             { q: "What do you think i expect from you every year", a: ["More time", "More commitment", "More understanding", "More love"], correct: "'Just hold me.'" },
         ];
-        const TIME_LIMIT = 15; // 15 seconds per question
+        const TIME_LIMIT = 10; // 10 seconds per question
         let currentQuestionIndex = 0;
         let score = 0;
         const totalQuestions = questions.length;
@@ -393,7 +393,7 @@
         
         function startMusic() {
             if (bgMusic.paused) {
-                bgMusic.volume = 0.35; 
+                bgMusic.volume = 0.36; 
                 bgMusic.play().catch(e => console.log("Music blocked:", e));
             }
             generateFloatingEmojis(); 
@@ -549,3 +549,4 @@
     </script>
 </body>
 </html>
+
