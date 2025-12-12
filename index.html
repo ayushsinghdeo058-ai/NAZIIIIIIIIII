@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Love, Happy Birthday</title>
+    <title>My Dearest Love, Happy Birthday</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* --- 0. Variables and Reset --- */
@@ -14,6 +14,8 @@
             --text-color: #333;
             --font-title: 'Great Vibes', cursive; /* Ultra Romantic Script Title */
             --font-body: 'Playfair Display', serif; /* Elegant Body Text */
+            --correct-color: #4CAF50; /* Green */
+            --incorrect-color: #F44336; /* Red */
         }
 
         body, html {
@@ -26,23 +28,20 @@
             background: radial-gradient(circle, var(--mint-green) 0%, #a4cfc5 100%);
             color: var(--text-color);
             font-family: var(--font-body);
-            overflow: hidden; /* Prevent body scroll, essential for floating hearts */
+            overflow: hidden; 
         }
 
-        /* --- 1. Screen and Card Styling (RESPONSIVENESS FIX HERE) --- */
+        /* --- 1. Screen and Card Styling --- */
         .screen {
             display: none;
             text-align: center;
-            padding: 4vw; /* Changed from fixed 40px to responsive 4vw/4vh */
+            padding: 4vw; 
             background-color: var(--soft-blush);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            
-            /* **FIX 1: Use MAX-WIDTH and percentages for flexibility** */
             max-width: 90%; 
-            width: 480px; /* Use a slightly smaller max-width as a default target */
+            width: 480px; 
             min-height: 450px;
-            
             animation: cardPopIn 1s ease-out;
             box-sizing: border-box;
             border: 5px double var(--deep-rose); 
@@ -55,12 +54,11 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* --- 2. Typography and Elements (RESPONSIVENESS FIX HERE) --- */
+        /* --- 2. Typography and Elements --- */
         h1 {
             font-family: var(--font-title);
             color: var(--deep-rose);
-            /* **FIX 2: Use responsive units (vmin) for large headings** */
-            font-size: 8vmin; /* Scales based on the viewport minimum dimension */
+            font-size: 8vmin; 
             margin: 0 0 10px 0;
             text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.7);
         }
@@ -84,7 +82,6 @@
 
         /* Countdown Screen Specific Styling */
         #countdownScreen h1 {
-            /* **FIX 3: Ensure the countdown number fits nicely** */
             font-size: 12em; 
             margin-top: 50px;
             color: var(--deep-rose);
@@ -94,6 +91,24 @@
         @keyframes pulse {
             from { transform: scale(1); opacity: 0.8; }
             to { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Timer Bar Styling */
+        #timerContainer {
+            width: 90%;
+            height: 15px;
+            background-color: #ddd;
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #timerBar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--deep-rose);
+            transition: width 0.1s linear;
         }
 
         /* --- 3. Buttons and Interaction --- */
@@ -111,9 +126,10 @@
             box-shadow: 0 6px 20px rgba(181, 73, 96, 0.5);
             font-family: var(--font-body);
             letter-spacing: 1px;
+            pointer-events: auto; /* Ensure buttons are clickable */
         }
 
-        /* **FIX 4: Scale down font size on very small screens** */
+        /* RESPONSIVE BUTTON FIXES */
         @media (max-width: 600px) {
             .screen { padding: 5vw; }
             button { font-size: 1.1em; padding: 12px 25px; }
@@ -144,12 +160,36 @@
             font-weight: 400;
             font-size: 1em;
             border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
         }
 
-        .options-container button:hover {
-            background-color: var(--deep-rose);
+        .options-container button:hover:not(.correct):not(.incorrect) {
+            background-color: #f7e0e7; /* Light hover effect before selecting */
+        }
+        
+        /* Answer Feedback Styling */
+        .options-container button.correct {
+            background-color: var(--correct-color);
             color: white;
-            transform: scale(1.03);
+            border-color: var(--correct-color);
+            transform: scale(1.05);
+            animation: pulseCorrect 0.5s 1;
+        }
+        .options-container button.incorrect {
+            background-color: var(--incorrect-color);
+            color: white;
+            border-color: var(--incorrect-color);
+            transform: scale(0.95);
+        }
+        @keyframes pulseCorrect {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            100% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+        }
+        
+        /* Disable buttons after selection/timeout */
+        .options-container.disabled button {
+            pointer-events: none;
+            opacity: 0.7;
         }
 
         /* --- 4. Special Notes/Text --- */
@@ -220,11 +260,11 @@
 
     <div id="startScreen" class="screen" style="display: block;">
         <h1>My Forever Love, Happy Birthday!</h1>
-        <img id="initialGif" class="initial-image" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTQxY2U3d2d4d242Y3k4ZnF0NzhqNHN5bGFoaHRtYXg0bjlydG56eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/DEbcjhoX1zBTiXmr3M/200.webp" alt="Romantic Animated GIF/Image">
+        <img id="initialImage" class="initial-image" src="Nazi.jpg" alt="Romantic Animated GIF/Image">
         <p style="font-size: 1.2em; color: #555;">
             A little challenge before the celebrations. See how well you truly know the heart that adores you.
         </p>
-        <button id="startButton">Wanna play a little fun game? ❤️🐸</button>
+        <button id="startButton">Wanna play a little fun game? ❤️</button>
     </div>
 
     <div id="countdownScreen" class="screen">
@@ -234,6 +274,11 @@
 
     <div id="gameScreen" class="screen">
         <h1 style="font-size: 3em;">The Love Challenge</h1>
+        
+        <div id="timerContainer">
+            <div id="timerBar"></div>
+        </div>
+
         <h2>Question <span id="questionNumber">1</span> of 11</h2>
         <div class="question-text" id="questionText" style="font-size: 1.2em; min-height: 60px;"></div>
         <div class="options-container" id="optionsContainer"></div>
@@ -249,7 +294,7 @@
 
     <div id="highScoreAskScreen" class="screen">
         <h1 style="color: var(--deep-rose); font-size: 3.5em;">The Ultimate Question...</h1>
-        <p style="font-size: 1.6em; margin-bottom: 40px;">Wanna know my heart more? 💖</p>
+        <p style="font-size: 1.6em; margin-bottom: 40px;">Wanna know my heart **more**? 💖</p>
         <button onclick="showScreen('highScoreSadScreen')">Yes</button>
         <button onclick="showScreen('highScoreKnowScreen')">No</button>
     </div>
@@ -257,7 +302,7 @@
     <div id="highScoreSadScreen" class="screen">
         <h1 style="font-size: 3em; color: #DC143C;">W-W-WHAT! 😥</h1>
         <p style="font-size: 1.8em; margin-top: 20px;">I AM SAD YOU DON'T KNOW ME ENOUGH...</p>
-        </div>
+    </div>
 
     <div id="highScoreFinalNote" class="screen">
         <h1>I was just kidding! 😂</h1>
@@ -272,7 +317,7 @@
     <div id="highScoreKnowScreen" class="screen">
         <h1>A True Soulmate! ✨</h1>
         <p style="font-size: 1.6em; margin-bottom: 20px;">I KNOW THAT YOU KNOW MY HEART MORE THAN I DO. BUT STILL, YOU HAVE TO LISTEN TO IT...</p>
-        <p style="margin-top: 29px; color:#666;">
+        <p style="margin-top: 30px; color: #666;"
         <button onclick="showScreen('poeticNoteScreen')" style="font-size: 2.5em; padding: 5px 20px;">&rarr;</button>
     </div>
 
@@ -307,12 +352,13 @@
             { q: "Which thing of yours affect me the MOST", a: ["your smile", "Your tone while talking", "your texts"], correct: "Your tone while talking" },
             { q: "What do you think i expect from you every year", a: ["More time", "More commitment", "More understanding", "More love"], correct: "'Just hold me.'" },
         ];
-
+        const TIME_LIMIT = 15; // 15 seconds per question
         let currentQuestionIndex = 0;
         let score = 0;
         const totalQuestions = questions.length;
         const highScoreThreshold = 4; // Score must be more than 4 (i.e., 5 or more)
         let countdown = 3;
+        let timerInterval;
 
         // --- 2. Element References ---
         const startButton = document.getElementById('startButton');
@@ -325,6 +371,7 @@
         const postGameActionElement = document.getElementById('postGameAction');
         const bgMusic = document.getElementById('bgMusic');
         const emojiContainer = document.getElementById('emojiContainer');
+        const timerBar = document.getElementById('timerBar');
         
         // --- 3. Utility Functions ---
         function showScreen(id) {
@@ -340,31 +387,28 @@
             if (id === 'highScoreSadScreen') {
                 setTimeout(() => {
                     showScreen('highScoreFinalNote');
-                }, 2000); // 2 seconds delay
+                }, 2000); 
             }
         }
         
         function startMusic() {
-            // Note: The music SRC must be valid and set in the HTML <audio> tag for modern browsers.
             if (bgMusic.paused) {
-                bgMusic.volume = 0.35; // Soft background volume
+                bgMusic.volume = 0.35; 
                 bgMusic.play().catch(e => console.log("Music blocked:", e));
             }
             generateFloatingEmojis(); 
         }
 
         function generateFloatingEmojis() {
-            if (emojiContainer.children.length > 0) return; // Prevent duplicates
-            // Custom Romantic Emojis: Frog, Frog, Frog, Balloons, Frog, Red Heart, hand-sign heart
+            if (emojiContainer.children.length > 0) return; 
             const emojis = ['&hearts;', '🐸', '🐸', '🎈', '🐸', '❤️', '🫶']; 
-            const numberOfEmojis = 33;
+            const numberOfEmojis = 35;
 
             for (let i = 0; i < numberOfEmojis; i++) {
                 const emoji = document.createElement('span');
                 emoji.classList.add('emoji');
                 emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 
-                // Randomize position and animation delay
                 emoji.style.left = `${Math.random() * 100}vw`;
                 emoji.style.animationDuration = `${20 + Math.random() * 10}s`; 
                 emoji.style.animationDelay = `${Math.random() * -25}s`; 
@@ -373,7 +417,32 @@
             }
         }
 
-        // --- 4. Game Countdown Logic ---
+        // --- 4. Timer Logic ---
+        function startQuestionTimer() {
+            clearInterval(timerInterval);
+            let timeRemaining = TIME_LIMIT;
+            timerBar.style.width = '100%';
+            timerBar.style.backgroundColor = 'var(--deep-rose)';
+            
+            const step = 1000 / TIME_LIMIT; 
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const percentage = (timeRemaining / TIME_LIMIT) * 100;
+                timerBar.style.width = `${percentage}%`;
+                
+                if (percentage < 30) {
+                    timerBar.style.backgroundColor = 'var(--incorrect-color)'; // Red warning
+                }
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    handleAnswer(null, questions[currentQuestionIndex].correct); // Time out acts as wrong answer
+                }
+            }, 1000);
+        }
+
+        // --- 5. Game Countdown Logic ---
         function startCountdown() {
             showScreen('countdownScreen');
             countdown = 3;
@@ -385,41 +454,62 @@
 
                 if (countdown <= 0) {
                     clearInterval(interval);
-                    loadQuestion(); // Start the game
+                    loadQuestion(); 
                 }
             }, 1000);
         }
 
-        // --- 5. Game Logic ---
+        // --- 6. Game Logic ---
         function loadQuestion() {
             if (currentQuestionIndex >= totalQuestions) {
                 return endGame();
             }
 
             showScreen('gameScreen');
+            optionsContainer.classList.remove('disabled'); // Re-enable buttons
+            startQuestionTimer(); // Start the new timer
+            
             const qData = questions[currentQuestionIndex];
 
             questionNumberElement.textContent = currentQuestionIndex + 1;
             questionTextElement.textContent = qData.q;
             optionsContainer.innerHTML = ''; 
 
-            // Shuffle answers
             const shuffledAnswers = qData.a.sort(() => Math.random() - 0.5); 
 
             shuffledAnswers.forEach(answer => {
                 const button = document.createElement('button');
                 button.textContent = answer;
-                button.onclick = () => selectAnswer(answer, qData.correct);
+                // Pass the correct answer to the click handler
+                button.onclick = () => handleAnswer(answer, qData.correct, button);
                 optionsContainer.appendChild(button);
             });
         }
-
-        function selectAnswer(selected, correct) {
+        
+        function handleAnswer(selected, correct, clickedButton) {
+            clearInterval(timerInterval); // Stop the timer immediately
+            optionsContainer.classList.add('disabled'); // Disable all buttons
+            
+            // Apply color feedback
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach(btn => {
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                } else if (btn === clickedButton) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Update score
             if (selected === correct) {
                 score++;
             }
-            currentQuestionIndex++;
-            loadQuestion();
+            
+            // Advance to the next question after a brief delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1500); // 1.5 seconds delay for visual feedback
         }
 
         function endGame() {
@@ -429,10 +519,10 @@
             let comment = "";
             let actionContent = "";
 
-            if (score > highScoreThreshold) { // If score is 5 or more
+            if (score > highScoreThreshold) { 
                 comment = "Incredible! You truly know my heart! ❤️";
                 actionContent = '<button onclick="showScreen(\'highScoreAskScreen\')">Continue to the Secret Note</button>';
-            } else { // Score is 4 or less
+            } else { 
                 comment = "You did great! But you are still learning the silly things about me! 😉";
                 actionContent = `
                     <p style="margin-top: 20px;">Don't worry, the real message is here!</p>
@@ -444,7 +534,7 @@
             postGameActionElement.innerHTML = actionContent;
         }
 
-        // --- 6. Initializer ---
+        // --- 7. Initializer ---
         startButton.addEventListener('click', () => {
             startMusic();
             startCountdown();
